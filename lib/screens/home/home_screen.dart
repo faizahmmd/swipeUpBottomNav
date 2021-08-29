@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:swipe_up_bottom_nav/controllers/home_controller.dart';
 import 'package:swipe_up_bottom_nav/constants.dart';
+import 'package:swipe_up_bottom_nav/widgets/bottom_nav_bar.dart';
 
 // Today i will show you how to implement the animation
 // So starting project comes with the UI
 // Run the app
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final controller = HomeController();
 
   void _onVerticalGesture(DragUpdateDetails details) {
@@ -37,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                           top: controller.homeState == HomeState.normal
                               ? 0.0
                               : -(constraints.maxHeight -
-                                  650),
+                              (constraints.maxHeight/1.12)),
                           left: 0,
                           right: 0,
                           height: constraints.maxHeight  -
@@ -48,12 +54,12 @@ class HomeScreen extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: defaultPadding),
                               decoration: BoxDecoration(
-                                color: Colors.yellow,
+                                color: Colors.white,
                                 borderRadius:  BorderRadius.only(
                                   bottomLeft:
-                                      Radius.circular(defaultPadding * controller.borderRadius),
+                                  Radius.circular(defaultPadding * controller.borderRadius),
                                   bottomRight:
-                                      Radius.circular(defaultPadding * controller.borderRadius),
+                                  Radius.circular(defaultPadding * controller.borderRadius),
                                 ),
                               ),
                             ),
@@ -67,7 +73,7 @@ class HomeScreen extends StatelessWidget {
                           right: 0,
                           height: controller.homeState == HomeState.normal
                               ? cartBarHeight
-                              : (constraints.maxHeight - 650),
+                              : (constraints.maxHeight - (constraints.maxHeight/1.12)),
                           child: GestureDetector(
                             onVerticalDragUpdate: _onVerticalGesture,
                             child: Container(
@@ -78,16 +84,7 @@ class HomeScreen extends StatelessWidget {
                                 duration: panelTransition,
                                 child: controller.homeState == HomeState.normal
                                     ? Container()
-                                    : Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Text("My bottom nav bar"),
-                                      Text("Hey")
-                                    ],
-                                  ),
-                                ),
+                                    : BottomNavBarWidget(),
                               ),
                             ),
                           ),
